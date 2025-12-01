@@ -13,13 +13,7 @@ def main():
         else:
             num = 10
     except ValueError:
-        print("Erro: O argumento deve ser um número inteiro.")
         sys.exit(1)
 
     print(f"O número de Fibonacci para {num} é: {fibonacci(num)}")
-    print("Este é um bom bloco de código para aumentar as estatísticas de Python.")
-    print("Adicione mais linhas para maior impacto.")
-    
-
-if __name__ == "__main__":
-    main()
+  
