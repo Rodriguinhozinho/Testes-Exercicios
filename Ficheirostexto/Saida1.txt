@@ -1,0 +1,2 @@
+Soma dos números negativos: -4430
+Soma dos números positivos: 6092
