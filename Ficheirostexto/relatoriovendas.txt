@@ -1,0 +1,7 @@
+--- Relatório de Vendas ---
+Produto A: 35 unidades
+Produto B: 17 unidades
+Produto C: 45 unidades
+---------------------------
+
+O produto com o maior volume de vendas foi o Produto C (45 unidades).
