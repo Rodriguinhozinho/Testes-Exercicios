@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Irineu Comilão - Full Stack</title>
+    
+    <style>
+        body {
+            background-color: #1a1a1a; /* Fundo escuro */
+            color: #ffffff;           /* Texto branco */
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+        }
+
+        .card {
+            background-color: #2d2d2d;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid #4CAF50;
+            text-align: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        ul {
+            text-align: left;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>WELCOME BACK!</h1>
+        <p>Teste de <b>HTML, CSS e JS</b>.</p>
+
+        <h3>Lista de Tarefas:</h3>
+        <ul>
+            <li>Instalar o JDK ✅</li>
+            <li>Aprender HTML & CSS ⏳</li>
+            <li>Dominar o Mundo 🚀</li>
+        </ul>
+
+        <br><br>
+
+        <button onclick="contarCliques()">
+            PRESS aqui
+        </button>
+
+        <p id="contador">Cliques: 0</p>
+    </div>
+
+    <script>
+        let Cliques = 0;
+        function contarCliques() {
+            Cliques++;
+            document.getElementById("contador").innerHTML = "Cliques: " + Cliques;
+            
+            if(Cliques === 10) {
+                alert("Nível 10 atingido! Você é persistente!");
+            }
+	    if(Cliques === 20) {
+		alert("Já chega ou não?");
+	    }
+	    if(Cliques === 30){
+		alert("Aííí campeão!");
+	    }
+        }
+    </script>
+
+</body>
+</html>
