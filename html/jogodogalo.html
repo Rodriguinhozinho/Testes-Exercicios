@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo do Galo</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 { color: #4CAF50; }
+
+        /* O Tabuleiro */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 10px;
+        }
+
+        /* Cada Quadrado */
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #2d2d2d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .cell:hover { background-color: #3d3d3d; }
+        
+        .status { margin: 20px; font-size: 1.2rem; }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Jogo do Galo</h1>
+    <div class="status" id="status">Vez do Jogador X</div>
+    
+    <div class="board" id="board">
+        <div class="cell" onclick="jogar(this, 0)"></div>
+        <div class="cell" onclick="jogar(this, 1)"></div>
+        <div class="cell" onclick="jogar(this, 2)"></div>
+        <div class="cell" onclick="jogar(this, 3)"></div>
+        <div class="cell" onclick="jogar(this, 4)"></div>
+        <div class="cell" onclick="jogar(this, 5)"></div>
+        <div class="cell" onclick="jogar(this, 6)"></div>
+        <div class="cell" onclick="jogar(this, 7)"></div>
+        <div class="cell" onclick="jogar(this, 8)"></div>
+    </div>
+
+    <br>
+    <button onclick="reiniciar()">Reiniciar Jogo</button>
+
+    <script>
+        let jogadorAtual = "X";
+        let jogoAtivo = true;
+        let estadoJogo = ["", "", "", "", "", "", "", "", ""];
+
+        const condicoesVitoria = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontais
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Verticais
+            [0, 4, 8], [2, 4, 6]             // Diagonais
+        ];
+
+        function jogar(celula, indice) {
+            if (estadoJogo[indice] !== "" || !jogoAtivo) return;
+
+            estadoJogo[indice] = jogadorAtual;
+            celula.innerText = jogadorAtual;
+            celula.style.color = jogadorAtual === "X" ? "#4CAF50" : "#2196F3";
+
+            verificarResultado();
+        }
+
+        function verificarResultado() {
+            let ganhou = false;
+
+            for (let i = 0; i < condicoesVitoria.length; i++) {
+                const [a, b, c] = condicoesVitoria[i];
+                if (estadoJogo[a] && estadoJogo[a] === estadoJogo[b] && estadoJogo[a] === estadoJogo[c]) {
+                    ganhou = true;
+                    break;
+                }
+            }
+
+            if (ganhou) {
+                document.getElementById("status").innerText = "O Jogador " + jogadorAtual + " VENCEU!";
+                jogoAtivo = false;
+                return;
+            }
+
+            if (!estadoJogo.includes("")) {
+                document.getElementById("status").innerText = "Empate!";
+                return;
+            }
+
+            jogadorAtual = jogadorAtual === "X" ? "O" : "X";
+            document.getElementById("status").innerText = "Vez do Jogador " + jogadorAtual;
+        }
+
+        function reiniciar() {
+            jogadorAtual = "X";
+            jogoAtivo = true;
+            estadoJogo = ["", "", "", "", "", "", "", "", ""];
+            document.getElementById("status").innerText = "Vez do Jogador X";
+            document.querySelectorAll('.cell').forEach(celula => celula.innerText = "");
+        }
+    </script>
+</body>
+</html>
