@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <title>MyFinance - Gestor Útil</title>
+    <style>
+        :root { --green: #2ecc71; --red: #e74c3c; --dark: #2c3e50; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; display: flex; justify-content: center; padding: 20px; }
+        
+        .container { background: white; width: 450px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        
+        h2 { text-align: center; color: var(--dark); }
+        
+        .balance-box { background: var(--dark); color: white; padding: 20px; border-radius: 10px; text-align: center; margin-bottom: 20px; }
+        #total-balance { font-size: 2rem; font-weight: bold; color: var(--green); }
+
+        .input-section { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        input, select { padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+        
+        button { background: var(--green); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        button:hover { filter: brightness(0.9); }
+
+        .history { border-top: 2px solid #eee; padding-top: 15px; max-height: 200px; overflow-y: auto; }
+        .item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .item.gasto { color: var(--red); }
+        .item.ganho { color: var(--green); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Dinheiro</h2>
+    
+    <div class="balance-box">
+        <small>Saldo Total (EUR)</small>
+        <div id="total-balance">0.00€</div>
+    </div>
+
+    <div class="input-section">
+        <input type="text" id="desc" placeholder="Ex: Salário, Almoço, Teclado...">
+        <input type="number" id="valor" placeholder="Valor (0.00)">
+        <select id="tipo">
+            <option value="ganho">Rendimento (+)</option>
+            <option value="gasto">Despesa (-)</option>
+        </select>
+        <button onclick="adicionarTransacao()">Registar Transação</button>
+    </div>
+
+    <div class="history" id="lista">
+        </div>
+</div>
+
+<script>
+    let saldo = 0;
+
+    function adicionarTransacao() {
+        const desc = document.getElementById('desc').value;
+        const valorInput = document.getElementById('valor').value;
+        const tipo = document.getElementById('tipo').value;
+
+        // Validação (como no C: evitar erros de tipo/nulos)
+        if (desc === "" || valorInput === "" || valorInput <= 0) {
+            alert("Por favor, insira dados válidos!");
+            return;
+        }
+
+        const valor = parseFloat(valorInput);
+        
+        // Atualizar saldo
+        if (tipo === 'ganho') {
+            saldo += valor;
+        } else {
+            saldo -= valor;
+        }
+
+        // Atualizar UI (Interface)
+        atualizarDisplay(desc, valor, tipo);
+        
+        // Limpar campos
+        document.getElementById('desc').value = "";
+        document.getElementById('valor').value = "";
+    }
+
+    function atualizarDisplay(desc, valor, tipo) {
+        const displaySaldo = document.getElementById('total-balance');
+        const lista = document.getElementById('lista');
+
+        displaySaldo.innerText = saldo.toFixed(2) + "€";
+        displaySaldo.style.color = saldo >= 0 ? "#2ecc71" : "#e74c3c";
+
+        const div = document.createElement('div');
+        div.classList.add('item', tipo);
+        div.innerHTML = `
+            <span>${desc}</span>
+            <strong>${tipo === 'ganho' ? '+' : '-'}${valor.toFixed(2)}€</strong>
+        `;
+        lista.prepend(div); // Adiciona no topo da lista
+    }
+</script>
+
+</body>
+</html>
