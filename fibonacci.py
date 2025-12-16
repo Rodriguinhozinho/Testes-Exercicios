@@ -16,4 +16,3 @@ def main():
         sys.exit(1)
 
     print(f"O número de Fibonacci para {num} é: {fibonacci(num)}")
-  
